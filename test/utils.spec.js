@@ -4,7 +4,6 @@ require('../testUtils');
 
 const utils = require('../lib/utils');
 const expect = require('chai').expect;
-const Buffer = require('safe-buffer').Buffer;
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
@@ -207,6 +206,14 @@ describe('utils', () => {
       const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        headers: {},
+      });
+      expect(args.length).to.equal(0);
+    });
+    it('assumes any string is an api key', () => {
+      const args = ['yolo'];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: 'yolo',
         headers: {},
       });
       expect(args.length).to.equal(0);
